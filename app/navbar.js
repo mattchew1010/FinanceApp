@@ -1,4 +1,4 @@
-import Account from "./accountComponent"
+import Account from "./components/accountNavbar"
 
 export default function Navbar() {
    return (
