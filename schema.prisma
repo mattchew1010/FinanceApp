@@ -1,0 +1,15 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:307126@localhost:3306/main"
+}
+
+model Session {
+  id Int @id @default(autoincrement())
+  sessionId String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
