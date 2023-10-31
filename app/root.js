@@ -31,6 +31,8 @@ export async function loader({request}){
     }else {
       return null
     }
+  }else {
+    return null
   }
 }
 export default function App() {
