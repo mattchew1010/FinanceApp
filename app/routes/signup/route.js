@@ -9,6 +9,8 @@ export default function App() {
          </h1>
          <form className="mx-6 pb-6 space-y-5" action="#" method="POST">
             <input type="username" name="username" id="username" className="my-0 bg-transparent border-0 outline-none text-white ring-2 ring-inset ring-indigo-600 rounded-md block w-full p-2.5" placeholder="Username" required=""/>
+            <input type="password" name="password" id="password" className="my-0 bg-transparent border-0 outline-none text-white ring-2 ring-inset ring-indigo-600 rounded-md block w-full p-2.5" placeholder="Password" required=""/>
+            <button type="submit" class="my-0 border-0 outline-none text-white bg-indigo-600 rounded-md block w-full p-2.5">Submit</button>
          </form>
       </div>
   </div>
