@@ -15,11 +15,11 @@ const AccountMenu =
 <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-neutral-800 outline outline-1 outline-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
    <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-neutral-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">Your Profile</a>
    <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-neutral-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Settings</a>
-   <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-neutral-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Sign out</a>
+   <a href="/logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-neutral-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Sign out</a>
 </div>
 
 
-export default function Acount(accountId) {
+export default function Acount() {
    const [AvatarUrl, setAvatarUrl] = useState()
    const [AccountButtonActive, setAccountButtonActive] = useState(false)
    return (
