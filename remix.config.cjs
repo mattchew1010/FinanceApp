@@ -1,3 +1,4 @@
 module.exports = {
-   tailwind: true
+   tailwind: true,
+   browserNodeBuiltinsPolyfill: {modules: {crypto: true}}
 }
