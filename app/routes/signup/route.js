@@ -1,6 +1,11 @@
 import {useLoaderData } from "@remix-run/react"
 import { redirect } from "@remix-run/node"
 import { useState } from "react"
+import { sessionIdCookie } from "../../cookies.server"
+import { PrismaClient } from "@prisma/client"
+import bcrypt from "bcryptjs"
+import { v4 as uuidv4 } from "uuid"
+const prisma = new PrismaClient()
 
 const usernameRegex = /^[a-z0-9_-]{3,15}$/
 const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
@@ -15,8 +20,22 @@ export async function action({request}) {
    if (typeof(username) === "string" && username.match(usernameRegex)){
       console.log("username is valid")
       if (typeof(password) === "string" && password.match(passwordRegex)){
-         console.log("password is valid")
-         return redirect("/dashboard")
+         const session = await prisma.session.create({
+            data: {
+               user: {
+                  create: {
+                     username: username,
+                     passwordHash: await bcrypt.hash(password, 10),
+                  }
+               },
+               sessionId: uuidv4()
+            }
+         })
+         return redirect("/dashboard", {
+            headers: {
+               "Set-Cookie": await sessionIdCookie.serialize(session.sessionId)
+            }
+         })
       }else {
          console.log("password is invalid")
          return false
