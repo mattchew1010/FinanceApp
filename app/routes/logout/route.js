@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 export async function loader({request}){
    const id = await sessionIdCookie.parse(request.headers.get("Cookie"))
-   prisma.session.delete({where: {sessionId: id}})
+   await prisma.session.delete({where: {sessionId: id}})
    return redirect("/", {
       headers: {
          "Clear-Site-Data": "cookies"
