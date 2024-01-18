@@ -48,24 +48,24 @@ export default function table() {
             </table>
             <dialog open class="bg-neutral-800 w-1/3 h-1/3 rounded-md p-4 outline outline-1 outline-violet-700 text-gray-300">
                 <h1 class="text-center text-xl font-medium">Add Tip</h1>
-                <form class="flex flex-col justify-center items-center my-2 ">
+                <form action="/dashboard/tip" class="flex flex-col justify-center items-center my-2 ">
                     <div class="flex flex-row justify-between items-center w-full my-2">
                         <label class="text-lg font-medium">Date</label>
                         <input onChange={(e) => setNewTip({...newTip, date: e.target.value})} class="w-1/2 rounded-md bg-neutral-800 outline outline-1 outline-violet-700 text-gray-300" type="date" name="date" id="date"/>
                     </div>
                     <div class="flex flex-row justify-between items-center w-full my-2">
                         <label class="text-lg font-medium">Hours Worked</label>
-                        <input onChange={(e) => setNewTip({...newTip, hoursWorked: e.target.value})} class="w-1/2 rounded-md bg-neutral-800 outline outline-1 outline-violet-700 text-gray-300" type="number" name="hoursWorked" id="hoursWorked"/>
+                        <input onChange={(e) => setNewTip({...newTip, hoursWorked: e.target.value})} class="w-1/2 rounded-md bg-neutral-800 outline outline-1 outline-violet-700 text-gray-300" type="number" step="0.01" name="hoursWorked" id="hoursWorked"/>
                     </div>
                     <div class="flex flex-row justify-between items-center w-full my-2">
                         <label class="text-lg font-medium">Amount</label>
-                        <input onChange={(e) => setNewTip({...newTip, amount: e.target.value})} class="w-1/2 rounded-md bg-neutral-800 outline outline-1 outline-violet-700 text-gray-300" type="number" name="amount" id="amount"/>
+                        <input onChange={(e) => setNewTip({...newTip, amount: e.target.value})} class="w-1/2 rounded-md bg-neutral-800 outline outline-1 outline-violet-700 text-gray-300" type="number" step="1" name="amount" id="amount"/>
                     </div>
                     <div class="flex flex-row justify-between items-center w-full my-2">
                         <button onClick={() => setNewTip({...newTip, open: false})} class="bg-violet-700 text-white hover:bg-violet-800 hover:text-white rounded-md px-3 py-2 text-md font-medium">
                             Cancel
                         </button>
-                        <button class="bg-violet-700 text-white hover:bg-violet-800 hover:text-white rounded-md px-3 py-2 text-md font-medium">
+                        <button type="submit" class="bg-violet-700 text-white hover:bg-violet-800 hover:text-white rounded-md px-3 py-2 text-md font-medium">
                             Add
                         </button>
                     </div>
