@@ -1,7 +1,6 @@
-import {useLoaderData } from "@remix-run/react"
-import { redirect } from "@remix-run/node"
+"use client"
 import { useState } from "react"
-import { sessionIdCookie } from "../../cookies.server"
+import {cookies} from "next/headers"
 import { PrismaClient } from "@prisma/client"
 import bcrypt from "bcryptjs"
 import { v4 as uuidv4 } from "uuid"
@@ -9,13 +8,13 @@ const prisma = new PrismaClient()
 
 const usernameRegex = /^[a-z0-9_-]{3,15}$/
 const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
-export async function action({request}) {
+export async function action({formData}) {
+   "use server"
    //validate request
    //create user in db if valid and doesn't exist
    //return success or error and redirect to dashboard (logged in)
-   const data = await request.formData()
-   const username = data.get("username")
-   const password = data.get("password")
+   const username = formData.get("username")
+   const password = formData.get("password")
 
    if (typeof(username) === "string" && username.match(usernameRegex)){
       console.log("username is valid")
@@ -29,12 +28,9 @@ export async function action({request}) {
                   userId: user.id
                }
             })
-         return redirect("/dashboard", {
-            headers: {
-               "Set-Cookie": await sessionIdCookie.serialize(session.sessionId)
-            }
-         })
-         }
+         cookies.set("session", session.sessionId)
+         return redirect("/dashboard")
+      }
       }else {
          console.log("password is invalid")
          return false
@@ -44,7 +40,7 @@ export async function action({request}) {
       return false
    }
 }
-export default function App() {
+export default function app() {
    const invalidRequestResponse = useLoaderData()
    //invalid request info bar if false
    const [validation, setValidation] = useState({
