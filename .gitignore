@@ -4,3 +4,4 @@
 .env
 dev.db
 /public/build
+.next
