@@ -1,9 +1,9 @@
-import { useLoaderData } from "@remix-run/react"
+"use client"
 import { useState } from "react"
-export default function table() {
-    const rowData = useLoaderData()
+export default function table({tipRows}) {
+    
     const [newTip, setNewTip] = useState({date: "", hoursWorked: "", amount: "", open: false})
-    console.log(rowData)
+    console.log(tipRows)
    return (
       <div class="bg-neutral-800 w-full rounded-md">
             <div class="flex flex-row justify-end items-center px-4 py-2">
@@ -34,11 +34,11 @@ export default function table() {
                     </tr>
                 )}
                 
-                {rowData.list.map((row) => {
+                {tipRows.list.map((row) => {
                     return (
                         <tr>
                             <th scope="row" class="px-2 py-3 font-medium whitespace-nowraptext-white">
-                                {row.date}
+                                {row.date.toLocaleDateString()}
                             </th>
                             <td class="px-2 py-3">{row.hoursWorked}</td>
                             <td class="px-2 py-3">${row.amount}</td>
