@@ -3,39 +3,30 @@ import {cookies} from "next/headers"
 import { PrismaClient } from "@prisma/client"
 import bcrypt from "bcryptjs"
 import { v4 as uuidv4 } from "uuid"
+import { redirect } from "next/navigation"
+
 const prisma = new PrismaClient()
 
 const usernameRegex = /^[a-z0-9_-]{3,15}$/
 const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
-export async function action({formData}) {
-   //validate request
-   //create user in db if valid and doesn't exist
-   //return success or error and redirect to dashboard (logged in)
+
+export async function formSubmit(formData) {
+   "use server"
    const username = formData.get("username")
    const password = formData.get("password")
-
-   if (typeof(username) === "string" && username.match(usernameRegex)){
-      console.log("username is valid")
-      if (typeof(password) === "string" && password.match(passwordRegex)){
-         const user = await prisma.user.findUnique({where: {username: username}})
-         if (user && bcrypt.compareSync(password, user.passwordHash)){
-            //password is valid
-            const session = await prisma.session.create({
-               data: {
-                  sessionId: uuidv4(),
-                  userId: user.id
-               }
-            })
-         cookies.set("session", session.sessionId)
+   if (username && password){
+      const user = await prisma.user.findUnique({where: {username: username}})
+      if (user && bcrypt.compareSync(password, user.passwordHash)){
+         //password is valid
+         const session = await prisma.session.create({
+            data: {
+               sessionId: uuidv4(),
+               userId: user.id
+            }
+         })
+         cookies().set("session", session.sessionId)
          return redirect("/dashboard")
-      }
-      }else {
-         console.log("password is invalid")
-         return false
-      }
-   }else {
-      console.log("username is invalid")
-      return false
+     }
    }
 }
 export default function app() {
@@ -46,7 +37,7 @@ export default function app() {
             <h1 className="mx-6 mt-2 text-xl font-bold leading-tight tracking-tight md:text-2xl text-gray-300">
                Login
             </h1>
-            <Form />
+            <Form formSubmit={formSubmit}/>
          </div>
    </div>
 )
