@@ -1,7 +1,3 @@
-export const metadata = {
-  title: 'Finance App',
-  description: 'idk',
-}
 import '../styles/globals.css'
 import Navbar from "./navbar"
 
