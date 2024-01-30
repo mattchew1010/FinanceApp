@@ -1,14 +1,15 @@
-import { redirect } from "@remix-run/node"
-import { sessionIdCookie } from "../../cookies.server"
 import { PrismaClient } from "@prisma/client"
+import { redirect } from "next/navigation"
+import { cookies } from "next/headers"
 const prisma = new PrismaClient()
 
-export async function loader({request}){
-   const id = await sessionIdCookie.parse(request.headers.get("Cookie"))
-   await prisma.session.delete({where: {sessionId: id}})
-   return redirect("/", {
-      headers: {
-         "Clear-Site-Data": "cookies"
+
+export async function GET(){
+   const sessionId = cookies().get("session").value
+   await prisma.session.delete({
+      where: {
+         sessionId: sessionId
       }
    })
+   return redirect("/")
 }
