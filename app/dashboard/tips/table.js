@@ -1,5 +1,10 @@
 "use client"
 import { useState } from "react"
+
+function formatDate(date) {
+    return `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}`
+}
+
 export default function table({tipRows, addTip}) {
     
     const [newTip, setNewTip] = useState({date: "", hoursWorked: "", amount: "", open: false})
@@ -52,9 +57,9 @@ export default function table({tipRows, addTip}) {
                     return (
                         <tr class="border-b border-gray-400">
                             <th scope="row" class="px-2 py-3 font-medium whitespace-nowraptext-white">
-                                {row.date.toLocaleDateString()}
+                                {formatDate(row.date)}
                             </th>
-                            <td class="px-2 py-3">{row.hoursWorked}</td>
+                            <td class={`px-2 py-3 ${row.hoursWorked === 0 ? "text-warning" : null}`}>{row.hoursWorked}</td>
                             <td class="px-2 py-3">${row.amount}</td>
                         </tr>
                     )
